@@ -355,15 +355,45 @@ function advance() {
     }
 }
 
-// ── Submit to Google Form ────────────────────────────────────
+// ── Submit to Google Form (hidden iframe trick — works cross-domain on Vercel) ──
 function submitToGoogle() {
-    const fd = new FormData();
-    for (const [key, val] of Object.entries(responses)) {
-        fd.append(key, val);
+    try {
+        // Create a hidden iframe as the submission target
+        const iframe = document.createElement('iframe');
+        iframe.name = 'hidden-submit-target';
+        iframe.id   = 'hidden-submit-target';
+        iframe.style.cssText = 'display:none;width:0;height:0;border:0;';
+        document.body.appendChild(iframe);
+
+        // Build a real HTML form targeting the iframe
+        const form = document.createElement('form');
+        form.method  = 'POST';
+        form.action  = FORM_URL;
+        form.target  = 'hidden-submit-target';
+        form.style.cssText = 'display:none;';
+
+        // Append each answer as a hidden input
+        for (const [key, val] of Object.entries(responses)) {
+            const input = document.createElement('input');
+            input.type  = 'hidden';
+            input.name  = key;
+            input.value = val;
+            form.appendChild(input);
+        }
+
+        document.body.appendChild(form);
+        form.submit();
+        console.log('✅ Response submitted to Google Sheet');
+
+        // Clean up after a short delay
+        setTimeout(() => {
+            if (form.parentNode)   form.parentNode.removeChild(form);
+            if (iframe.parentNode) iframe.parentNode.removeChild(iframe);
+        }, 5000);
+
+    } catch (err) {
+        console.error('❌ Submission error:', err);
     }
-    fetch(FORM_URL, { method: 'POST', mode: 'no-cors', body: fd })
-        .then(() => console.log('✅ Response saved to Google Sheet'))
-        .catch(err => console.error('❌ Submission error:', err));
 }
 
 // ── Show Result ──────────────────────────────────────────────
