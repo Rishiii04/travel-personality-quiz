@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Personality Quiz</title>
+    <meta name="description" content="Discover your unique travel personality in just 16 questions.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="layout">
+
+        <!-- LEFT: Dynamic Image Panel -->
+        <div class="panel-image" id="panel-image">
+            <div class="panel-image-overlay"></div>
+            <div class="panel-image-label" id="panel-label">
+                <span class="label-tag">Travel Personality Quiz</span>
+            </div>
+            <!-- Result personality badge (shown on results screen) -->
+            <div class="personality-badge" id="personality-badge" style="display:none;">
+                <div class="badge-inner">
+                    <span class="badge-eyebrow">Your Persona</span>
+                    <h2 class="badge-name" id="badge-name">Velvet Voyager</h2>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT: Content Panel -->
+        <div class="panel-content">
+
+            <!-- WELCOME SCREEN -->
+            <div class="screen" id="screen-welcome">
+                <div class="screen-inner">
+                    <span class="eyebrow">16 Questions · 2 Minutes</span>
+                    <h1>What Kind of Traveller Are You?</h1>
+                    <p>Answer honestly — we'll reveal your travel personality and what your perfect trip looks like.</p>
+                    <button class="btn-primary" id="btn-start">Start the Quiz</button>
+                </div>
+            </div>
+
+            <!-- QUIZ SCREEN -->
+            <div class="screen hidden" id="screen-quiz">
+                <div class="screen-inner">
+                    <div class="quiz-header">
+                        <div class="progress-meta">
+                            <span id="q-counter">1 / 16</span>
+                            <span id="q-section"></span>
+                        </div>
+                        <div class="progress-track">
+                            <div class="progress-fill" id="progress-fill"></div>
+                        </div>
+                    </div>
+                    <h2 class="question-text" id="question-text"></h2>
+                    <div class="options-list" id="options-list"></div>
+                </div>
+            </div>
+
+            <!-- RESULT SCREEN -->
+            <div class="screen hidden" id="screen-result">
+                <div class="screen-inner result-inner">
+                    <span class="eyebrow">Your Result</span>
+                    <h1 class="result-name" id="result-name">Velvet Voyager</h1>
+                    <div class="result-image-wrap">
+                        <img class="result-img" id="result-img" src="" alt="Personality result">
+                    </div>
+                    <p class="result-desc" id="result-desc"></p>
+                    <div class="result-traits" id="result-traits"></div>
+                    <button class="btn-secondary" id="btn-restart">Take Again</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
