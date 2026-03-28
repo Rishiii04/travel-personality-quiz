@@ -47,9 +47,9 @@ const QUESTIONS = [
         options: [
             { text: "No personal income" },
             { text: "Below ₹15,000" },
-            { text: "₹15,000 – ₹30,000" },
-            { text: "₹30,000 – ₹50,000" },
-            { text: "₹50,000 – ₹1,00,000" },
+            { text: "₹15,000 - ₹30,000" },
+            { text: "₹30,000 - ₹50,000" },
+            { text: "₹50,000 - ₹1,00,000" },
             { text: "Above ₹1,00,000" }
         ]
     },
@@ -145,7 +145,7 @@ const QUESTIONS = [
             { text: "Luxury resort with full service",     trait: "velvet_voyager" },
             { text: "Remote campsite in nature",           trait: "wild_pathfinder" },
             { text: "Heritage homestay with local hosts",  trait: "culture_weaver" },
-            { text: "Lively hostel with other travellers", trait: "tribe_connector" },
+            { text: "Lively hostel with other travelers", trait: "tribe_connector" },
             { text: "Cheapest clean room you can find",    trait: "free_minimalist" }
         ]
     },
@@ -197,7 +197,7 @@ const QUESTIONS = [
             { text: "Pre-planned premium itinerary",                      trait: "velvet_voyager" },
             { text: "Built around outdoor challenges",                    trait: "wild_pathfinder" },
             { text: "Research culture, food, and history deeply",         trait: "culture_weaver" },
-            { text: "Follow group trends or friends' ideas",              trait: "tribe_connector" },
+            { text: "Follow group trends or friends’ ideas",              trait: "tribe_connector" },
             { text: "Flexible, cheapest plan, adjust on the go",          trait: "free_minimalist" }
         ]
     }
