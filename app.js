@@ -355,44 +355,51 @@ function advance() {
     }
 }
 
-// ── Submit to Google Form (hidden iframe trick — works cross-domain on Vercel) ──
+// ── Submit to Google Form ─────────────────────────────────────
+// Uses 3 methods simultaneously for maximum reliability on Vercel.
 function submitToGoogle() {
+    // Build URL-encoded string that Google Forms accepts
+    const params = new URLSearchParams();
+    for (const [key, val] of Object.entries(responses)) {
+        params.append(key, val);
+    }
+    const body = params.toString();
+
+    // ── METHOD 1: sendBeacon (most reliable, fire-and-forget) ──
+    if (navigator.sendBeacon) {
+        const blob = new Blob([body], { type: 'application/x-www-form-urlencoded' });
+        const sent = navigator.sendBeacon(FORM_URL, blob);
+        console.log('📡 sendBeacon:', sent ? '✅ Queued' : '⚠️ Failed');
+    }
+
+    // ── METHOD 2: fetch with no-cors + url-encoded body ──────
+    fetch(FORM_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        body: body,
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    }).then(() => console.log('🌐 fetch: ✅ Sent'))
+      .catch(e  => console.warn('🌐 fetch: ⚠️', e.message));
+
+    // ── METHOD 3: Hidden iframe form submit (legacy fallback) ─
     try {
-        // Create a hidden iframe as the submission target
-        const iframe = document.createElement('iframe');
-        iframe.name = 'hidden-submit-target';
-        iframe.id   = 'hidden-submit-target';
-        iframe.style.cssText = 'display:none;width:0;height:0;border:0;';
-        document.body.appendChild(iframe);
-
-        // Build a real HTML form targeting the iframe
+        const uid = 'gf_' + Date.now();
+        const iframe = Object.assign(document.createElement('iframe'), {
+            name: uid, style: 'display:none;position:absolute;width:0;height:0;border:0;'
+        });
         const form = document.createElement('form');
-        form.method  = 'POST';
-        form.action  = FORM_URL;
-        form.target  = 'hidden-submit-target';
-        form.style.cssText = 'display:none;';
-
-        // Append each answer as a hidden input
-        for (const [key, val] of Object.entries(responses)) {
-            const input = document.createElement('input');
-            input.type  = 'hidden';
-            input.name  = key;
-            input.value = val;
-            form.appendChild(input);
+        Object.assign(form, { method: 'POST', action: FORM_URL, target: uid });
+        form.style.display = 'none';
+        for (const [k, v] of Object.entries(responses)) {
+            const inp = Object.assign(document.createElement('input'), { type: 'hidden', name: k, value: v });
+            form.appendChild(inp);
         }
-
-        document.body.appendChild(form);
+        document.body.append(iframe, form);
         form.submit();
-        console.log('✅ Response submitted to Google Sheet');
-
-        // Clean up after a short delay
-        setTimeout(() => {
-            if (form.parentNode)   form.parentNode.removeChild(form);
-            if (iframe.parentNode) iframe.parentNode.removeChild(iframe);
-        }, 5000);
-
-    } catch (err) {
-        console.error('❌ Submission error:', err);
+        console.log('🖼️ iframe form: ✅ Submitted');
+        setTimeout(() => { iframe.remove(); form.remove(); }, 6000);
+    } catch (e) {
+        console.warn('🖼️ iframe form: ⚠️', e.message);
     }
 }
 
