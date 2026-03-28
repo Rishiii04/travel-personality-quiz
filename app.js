@@ -96,8 +96,8 @@ const QUESTIONS = [
         type: "radio",
         options: [
             { text: "Full payment at the time of booking" },
-            { text: "Partial payment, remaining later" },
-            { text: "Smaller amounts over a period of time" },
+            { text: "Partial payment at booking and remaining amount later" },
+            { text: "Payment in smaller amounts over a period of time" },
             { text: "Depends on trip cost" }
         ]
     },
@@ -132,7 +132,7 @@ const QUESTIONS = [
         options: [
             { text: "One person pays, others pay later" },
             { text: "UPI transfers immediately" },
-            { text: "An app like Splitwise" }
+            { text: "Apps like Splitwise" }
         ]
     },
     // ── PERSONALITY QUESTIONS (scored) ────────────────────
@@ -168,11 +168,11 @@ const QUESTIONS = [
         section: "Your Travel Style",
         type: "radio",
         options: [
-            { text: "Spend more for smooth comfort",           trait: "velvet_voyager" },
-            { text: "Spend on thrilling experiences",          trait: "wild_pathfinder" },
-            { text: "Spend on food and cultural experiences",  trait: "culture_weaver" },
-            { text: "Share costs with friends for fun trips",  trait: "tribe_connector" },
-            { text: "Minimise costs to travel longer",         trait: "free_minimalist" }
+            { text: "Spend more for smooth comfort",               trait: "velvet_voyager" },
+            { text: "Spend on thrilling experiences",              trait: "wild_pathfinder" },
+            { text: "Spend on food and cultural entry tickets",    trait: "culture_weaver" },
+            { text: "Share costs with friends for fun trips",      trait: "tribe_connector" },
+            { text: "Minimize costs to travel longer",             trait: "free_minimalist" }
         ]
     },
     {
@@ -183,7 +183,7 @@ const QUESTIONS = [
         options: [
             { text: "Partner or small private circle",    trait: "velvet_voyager" },
             { text: "Adventure-focused companions",       trait: "wild_pathfinder" },
-            { text: "Solo, while connecting with locals", trait: "culture_weaver" },
+            { text: "Solo while connecting with locals",  trait: "culture_weaver" },
             { text: "Big energetic friend group",         trait: "tribe_connector" },
             { text: "Mostly solo and independent",        trait: "free_minimalist" }
         ]
@@ -194,11 +194,11 @@ const QUESTIONS = [
         section: "Your Travel Style",
         type: "radio",
         options: [
-            { text: "Pre-planned premium itinerary",             trait: "velvet_voyager" },
-            { text: "Built around outdoor challenges",           trait: "wild_pathfinder" },
-            { text: "Research culture, food, and history",       trait: "culture_weaver" },
-            { text: "Follow group trends or friends' ideas",     trait: "tribe_connector" },
-            { text: "Flexible & cheapest plan, adjust on the go", trait: "free_minimalist" }
+            { text: "Pre-planned premium itinerary",                      trait: "velvet_voyager" },
+            { text: "Built around outdoor challenges",                    trait: "wild_pathfinder" },
+            { text: "Research culture, food, and history deeply",         trait: "culture_weaver" },
+            { text: "Follow group trends or friends' ideas",              trait: "tribe_connector" },
+            { text: "Flexible, cheapest plan, adjust on the go",          trait: "free_minimalist" }
         ]
     }
 ];
