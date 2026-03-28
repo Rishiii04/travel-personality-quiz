@@ -356,32 +356,8 @@ function advance() {
 }
 
 // ── Submit to Google Form ─────────────────────────────────────
-// Uses 3 methods simultaneously for maximum reliability on Vercel.
 function submitToGoogle() {
-    // Build URL-encoded string that Google Forms accepts
-    const params = new URLSearchParams();
-    for (const [key, val] of Object.entries(responses)) {
-        params.append(key, val);
-    }
-    const body = params.toString();
-
-    // ── METHOD 1: sendBeacon (most reliable, fire-and-forget) ──
-    if (navigator.sendBeacon) {
-        const blob = new Blob([body], { type: 'application/x-www-form-urlencoded' });
-        const sent = navigator.sendBeacon(FORM_URL, blob);
-        console.log('📡 sendBeacon:', sent ? '✅ Queued' : '⚠️ Failed');
-    }
-
-    // ── METHOD 2: fetch with no-cors + url-encoded body ──────
-    fetch(FORM_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        body: body,
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-    }).then(() => console.log('🌐 fetch: ✅ Sent'))
-      .catch(e  => console.warn('🌐 fetch: ⚠️', e.message));
-
-    // ── METHOD 3: Hidden iframe form submit (legacy fallback) ─
+    // ── Hidden iframe form submit (reliable cross-origin fallback) ─
     try {
         const uid = 'gf_' + Date.now();
         const iframe = Object.assign(document.createElement('iframe'), {
@@ -396,10 +372,10 @@ function submitToGoogle() {
         }
         document.body.append(iframe, form);
         form.submit();
-        console.log('🖼️ iframe form: ✅ Submitted');
+        console.log('✅ Response submitted to Google Sheet');
         setTimeout(() => { iframe.remove(); form.remove(); }, 6000);
     } catch (e) {
-        console.warn('🖼️ iframe form: ⚠️', e.message);
+        console.warn('⚠️ Submission error:', e.message);
     }
 }
 
